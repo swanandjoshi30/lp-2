@@ -1,0 +1,66 @@
+# ----------- BFS Program ---------------
+
+graph = {}
+num_nodes = int(input("Enter number of nodes for BFS: "))
+for _ in range(num_nodes):
+    node = input("Enter node: ")
+    neighbours = input(f"Enter neighbors of {node} (space-separated): ").split()
+    graph[node] = neighbours
+
+start_bfs = input("Enter starting node for BFS: ")
+visited = set()
+queue = [start_bfs]
+visited.add(start_bfs)
+
+def bfs(visited, graph, queue):
+    if not queue:
+        return
+    else:
+        s = queue.pop(0)
+        print(s, end=" ")
+        for neighbour in graph[s]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+        bfs(visited, graph, queue)
+
+print("\nFollowing is the Breadth-First Search:\n")
+bfs(visited, graph, queue)
+
+
+
+
+
+
+# ---------------------Without user input--------------------
+
+
+graph = {
+  '0' : ['1','2'],
+  '1' : ['0','4'],
+  '2' : ['0','3'],
+  '4' : ['1'],
+  '3' : ['2','6','5'],
+  '6' : ['3'],
+  '5' : ['3']
+}
+
+visited = set() 
+queue = ['0']
+visited.add('0')    
+
+def bfs(visited, graph, queue):
+  if not queue :
+    return
+  else:
+    s = queue.pop(0)
+    print (s, end = " ")
+    for neighbour in graph[s]:
+      if neighbour not in visited:
+        visited.add(neighbour)
+        queue.append(neighbour)
+    bfs(visited, graph,queue)
+
+print("\n\nFollowing is the Breadth-First Search : \n")
+bfs(visited, graph, queue)
+print("\n")

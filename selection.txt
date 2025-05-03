@@ -1,0 +1,22 @@
+def selection_sort(data):
+    n = len(data)
+    for i in range(n - 1):
+        min_index = i
+        for j in range(i + 1, n):
+            if data[j] < data[min_index]:
+                min_index = j
+
+        if min_index != i:
+            data[i], data[min_index] = data[min_index], data[i]
+        print(f"Iteration {i+1}: {data}")
+    return data
+
+my_list = []
+n = int(input("Enter number of elements to add: "))
+i = 0
+for i in range(n):
+    ele = int(input(f"Element {i + 1}: "))
+    my_list.append(ele)
+print(f"Original list: {my_list}")
+sorted_list = selection_sort(my_list.copy())
+print(f"Sorted list: {sorted_list}")
