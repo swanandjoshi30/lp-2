@@ -1,0 +1,63 @@
+class DisjointSet:
+    def __init__(self, vertices):
+        self.parent = {v: v for v in vertices}
+        self.rank = {v: 0 for v in vertices}
+
+    def find(self, item):
+        if self.parent[item] != item:
+            self.parent[item] = self.find(self.parent[item])
+        return self.parent[item]
+
+    def union(self, set1, set2):
+        root1 = self.find(set1)
+        root2 = self.find(set2)
+        if root1 != root2:
+            if self.rank[root1] < self.rank[root2]:
+                self.parent[root1] = root2
+            elif self.rank[root1] > self.rank[root2]:
+                self.parent[root2] = root1
+            else:
+                self.parent[root2] = root1
+                self.rank[root1] += 1
+            return True
+        return False
+
+
+def kruskal(vertices, edges):
+    ds = DisjointSet(vertices)
+    mst = []
+    edges.sort(key=lambda x: x[2])
+
+    for u, v, weight in edges:
+        if ds.union(u, v):
+            mst.append((u, v, weight))
+
+    return mst
+
+
+if __name__ == "__main__":
+    print("Enter number of vertices:")
+    n = int(input())
+    print("Enter the vertex names (space-separated):")
+    vertices = input().split()
+
+    print("Enter number of edges:")
+    e = int(input())
+
+    edges = []
+    print(f"Enter {e} edges in the format: source destination weight")
+    for _ in range(e):
+        u, v, w = input().split()
+        edges.append((u, v, int(w)))
+
+    mst = kruskal(vertices, edges)
+
+    print("\nMinimum Spanning Tree:")
+    for u, v, w in mst:
+        print(f"{u} - {v} : {w}")
+
+    total_weight = 0
+    for u, v, w in mst:
+        total_weight += w
+
+    print(f"\nTotal weight of MST: {total_weight}")
