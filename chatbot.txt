@@ -1,0 +1,91 @@
+def greet(name):
+    return f"Hello, {name.capitalize()}! How can I assist you today?"
+
+def goodbye():
+    return "Goodbye! Have a great day."
+
+def thank_you():
+    return "You're welcome! Is there anything else I can help you with?"
+
+def ask_help():
+    return (
+        "Sure! I can help you with the following:\n"
+        "1. Order Inquiry\n"
+        "2. Product Information\n"
+        "3. Payment Issues\n"
+        "Please type the option number or a related keyword."
+    )
+
+def handle_order_inquiry():
+    return "I can help you with order status or tracking information."
+
+def handle_product_info():
+    return (
+        "We offer a variety of products. Here's a list:\n"
+        "1. Mobiles\n"
+        "2. Earphones\n"
+        "3. TVs\n"
+        "4. Fridges\n"
+        "Would you like more details about any specific product?"
+    )
+
+def handle_payment_issue():
+    return "If you're facing any payment issues, please contact our support team."
+
+def handle_specific_product(user_input):
+    if "mobile" in user_input:
+        return "Mobiles: We offer the latest Android and iOS smartphones from top brands."
+    elif "earphone" in user_input:
+        return "Earphones: Wired and wireless earphones with noise cancellation available."
+    elif "tv" in user_input:
+        return "TVs: Smart TVs from 32\" to 65\", 4K and Full HD options available."
+    elif "fridge" in user_input:
+        return "Fridges: Single-door, double-door, and smart refrigerators in stock."
+    else:
+        return "Sorry, we don't have details for that product. Please choose from Mobiles, Earphones, TVs, or Fridges."
+
+def handle_default():
+    return "I'm sorry, I didn't understand that. Could you please rephrase?"
+
+def chatbot():
+    print("Welcome to our customer service chatbot!")
+    name = input("May I have your name? ")
+    print("Chatbot:", greet(name))
+
+    while True:
+        user_input = input(f"{name}: ").lower().strip()
+
+        if any(word in user_input for word in ["hello", "hi"]):
+            print("Chatbot:", greet(name))
+
+        elif any(word in user_input for word in ["bye", "goodbye", "exit"]):
+            confirm = input("Are you sure you want to exit? (yes/no): ").lower()
+            if confirm in ["yes", "y"]:
+                print("Chatbot:", goodbye())
+                break
+            else:
+                continue
+
+        elif "thank" in user_input:
+            print("Chatbot:", thank_you())
+
+        elif "help" in user_input:
+            print("Chatbot:", ask_help())
+
+        elif "1" in user_input or "order" in user_input or "track" in user_input:
+            print("Chatbot:", handle_order_inquiry())
+
+        elif "2" in user_input or "product" in user_input or "item" in user_input:
+            print("Chatbot:", handle_product_info())
+
+        elif "3" in user_input or "payment" in user_input or "issue" in user_input or "problem" in user_input:
+            print("Chatbot:", handle_payment_issue())
+
+        elif any(product in user_input for product in ["mobile", "mobiles", "earphone", "earphones", "tv", "tvs", "fridge", "fridges"]):
+            print("Chatbot:", handle_specific_product(user_input))
+
+        else:
+            print("Chatbot:", handle_default())
+
+if __name__ == "__main__":
+    chatbot()

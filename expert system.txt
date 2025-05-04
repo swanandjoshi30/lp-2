@@ -1,0 +1,94 @@
+class Employee:
+    def __init__(self, name, emp_id, role, tasks, deadlines, feedback):
+        self.name = name
+        self.emp_id = emp_id
+        self.role = role
+        self.tasks = tasks
+        self.deadlines = deadlines
+        self.feedback = feedback
+        self.score = 0
+        self.rating = ""
+        self.suggestion = ""
+
+    def evaluate(self):
+        # Weightage
+        self.score = min(
+            (self.tasks * 0.4) + (self.deadlines * 0.3) + (self.feedback * 10 * 0.3), 100
+        )
+
+        if self.score >= 90:
+            self.rating = "Excellent"
+            self.suggestion = "Promotion and leadership training"
+        elif self.score >= 75:
+            self.rating = "Good"
+            self.suggestion = "Continue and upskill"
+        elif self.score >= 60:
+            self.rating = "Average"
+            self.suggestion = "Needs improvement"
+        else:
+            self.rating = "Poor"
+            self.suggestion = "Review and monitor"
+
+    def show(self):
+        print(f"\nName: {self.name}, ID: {self.emp_id}, Role: {self.role}")
+        print(f"Score: {self.score:.1f}%, Rating: {self.rating}")
+        print(f"Suggestion: {self.suggestion}")
+
+
+class EvaluationSystem:
+    def __init__(self):
+        self.employees = []
+
+    def add_employee(self):
+        name = input("Enter name: ")
+        emp_id = input("Enter ID: ")
+        role = input("Enter role: ")
+        try:
+            tasks = int(input("Completed tasks: "))
+            deadlines = int(input("Deadlines met: "))
+            feedback = float(input("Feedback (0–10): "))
+        except ValueError:
+            print("Invalid input. Try again.")
+            return
+        emp = Employee(name, emp_id, role, tasks, deadlines, feedback)
+        self.employees.append(emp)
+        print("Employee added!\n")
+
+    def evaluate_all(self):
+        if not self.employees:
+            print("No employees to evaluate.\n")
+            return
+        for emp in self.employees:
+            emp.evaluate()
+        print("Evaluation complete!\n")
+
+    def show_reports(self):
+        if not self.employees:
+            print("No records to display.\n")
+            return
+        print("\n--- Employee Reports ---")
+        for emp in self.employees:
+            emp.show()
+
+
+def main():
+    system = EvaluationSystem()
+    while True:
+        print("\n--- Employee Evaluation System ---")
+        print("1. Add Employee\n2. Evaluate\n3. Show Reports\n4. Exit")
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            system.add_employee()
+        elif choice == '2':
+            system.evaluate_all()
+        elif choice == '3':
+            system.show_reports()
+        elif choice == '4':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid option. Try again.")
+
+if __name__ == "__main__":
+    main()
